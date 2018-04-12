@@ -1,10 +1,12 @@
+require 'vcard'
+
 # Namespace for helper methods to generate a vcard.
 module Parliament
   module Utils
     module Helpers
       module VCardHelper
         # Generates a vcard for the given contact point.
-        #
+        #œ
         # @param [Grom::Node] contact_point a Grom::Node with type: https://id.parliament.uk/schema/ContactPoint.
         # @return [Vcard::Vcard] a vcard with person, postal address and contact details set.
         def create_vcard(contact_point)

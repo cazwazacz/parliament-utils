@@ -7,7 +7,7 @@ RSpec.describe Parliament::Utils::Helpers::VCardHelper, vcr: true do
     let (:dummy_class) { Class.new { include Parliament::Utils::Helpers::VCardHelper } }
 
     it 'creates a vcard' do
-      binding.irb
+      
     end
   end
 

@@ -24,8 +24,7 @@ module Parliament
         #
         # @return [Parliament::Response]
         def self.filter_response_data(request, *filters)
-          response = request.get
-          response.filter(*filters)
+          request.get.filter(*filters)
         end
 
         # Returns the base namespace used for filtering parliamentary data within sparql queries

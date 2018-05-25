@@ -1,22 +1,22 @@
 require 'spec_helper'
 
 RSpec.describe Parliament::Utils::Helpers::ApplicationHelper do
-  describe '#data_check' do
-    # Crate a dummy class that includes our module
-    # Also, set up all methods etc needed for our test (there are overridden in each test)
-    let(:dummy_class) do
-      Class.new do
-        include Parliament::Utils::Helpers::ApplicationHelper
+  # Crate a dummy class that includes our module
+  # Also, set up all methods etc needed for our tests (there are overridden in each test)
+  let(:dummy_class) do
+    Class.new do
+      include Parliament::Utils::Helpers::ApplicationHelper
 
-        ROUTE_MAP=nil
+      ROUTE_MAP=nil
 
-        def request; end
-        def params; end
-        def response; end
-        def redirect_to(_); end
-      end
+      def request; end
+      def params; end
+      def response; end
+      def redirect_to(_); end
     end
+  end
 
+  describe '#data_check' do
     # Used for ROUTE_MAP
     let(:route_map) do
       {
@@ -65,6 +65,29 @@ RSpec.describe Parliament::Utils::Helpers::ApplicationHelper do
         allow(instance).to receive(:redirect_to).with('https://api.parliament.uk/foo?bar=true&test=abc').and_return(:as_expected)
 
         expect(instance.data_check).to eq(:as_expected)
+      end
+    end
+  end
+
+  describe '#populate_request_id' do
+    context 'with the env variable set' do
+      it 'sets the instance variable' do
+        instance = dummy_class.new
+        allow(instance).to receive(:request).and_return(double(:request, env: { 'ApplicationInsights.request.id' => '|1234abcd.' }))
+        instance.populate_request_id
+
+        expect(instance.instance_variable_get(:@app_insights_request_id)).to eq('|1234abcd.')
+      end
+    end
+
+
+    context 'without the env variable set' do
+      it 'sets the instance variable as nil' do
+        instance = dummy_class.new
+        allow(instance).to receive(:request).and_return(double(:request, env: {}))
+        instance.populate_request_id
+
+        expect(instance.instance_variable_get(:@app_insights_request_id)).to be_nil
       end
     end
   end

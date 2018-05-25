@@ -116,6 +116,11 @@ module Parliament
           Pugin.alternates = alternates
         end
 
+        # Populates @app_insights_request_id if present
+        def populate_request_id
+          @app_insights_request_id = request.env['ApplicationInsights.request.id']
+        end
+
         private
 
         # Before every request, reset Pugin's list of alternates to prevent showing rel-alternate tags on pages without data

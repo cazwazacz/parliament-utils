@@ -1,5 +1,5 @@
 module Parliament
   module Utils
-    VERSION = '0.7.3'.freeze
+    VERSION = '0.8.4'.freeze
   end
 end

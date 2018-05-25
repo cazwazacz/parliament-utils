@@ -5,16 +5,19 @@ module Parliament
   module Utils
     module Helpers
       module ParliamentHelper
-        def self.parliament_request
+        def self.parliament_request(request_id = nil, request_number = 1)
+          headers = {'Ocp-Apim-Subscription-Key' => ENV['PARLIAMENT_AUTH_TOKEN'] }
+          headers['Request-Id'] = "#{request_id}#{request_number}" if request_id
+
           Parliament::Request::UrlRequest.new(
-          builder:    Parliament::Builder::NTripleResponseBuilder,
-          headers:    { 'Ocp-Apim-Subscription-Key': ENV['PARLIAMENT_AUTH_TOKEN'] },
-          decorators: Parliament::Grom::Decorator
+            builder:    Parliament::Builder::NTripleResponseBuilder,
+            headers:    headers,
+            decorators: Parliament::Grom::Decorator
           )
         end
 
-        def parliament_request
-          Parliament::Utils::Helpers::ParliamentHelper.parliament_request
+        def parliament_request(request_id = nil, request_number = 1)
+          Parliament::Utils::Helpers::ParliamentHelper.parliament_request(request_id, request_number)
         end
       end
     end

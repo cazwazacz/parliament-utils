@@ -40,7 +40,7 @@ module Parliament
         #
         # @return [String] uri with specific path added for filtering parliamentary data within sparql queries
         def self.namespace_uri_path(path)
-          self.namespace_uri + path
+          namespace_uri + path
         end
 
         # Returns uri with schema path and specific type added for filtering parliamentary data within sparql queries
@@ -49,7 +49,7 @@ module Parliament
         #
         # @return [String] uri with schema path and specific type added for filtering parliamentary data within sparql queries
         def self.namespace_uri_schema_path(type)
-          self.namespace_uri_path("/schema/#{type}")
+          namespace_uri_path("/schema/#{type}")
         end
       end
     end

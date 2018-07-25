@@ -10,7 +10,7 @@ module Parliament
         #
         # @return [Parliament::Response::NTripleResponse] Ntriple response filtered by types
         def self.filter(request, *types)
-          types_to_filter = self.filter_types(*types)
+          types_to_filter = filter_types(*types)
           Parliament::Utils::Helpers::RequestHelper.filter_response_data(
             request, *types_to_filter
           )
@@ -46,10 +46,10 @@ module Parliament
         #
         # @return [Parliament::Response::NTripleResponse] Ntriple response filtered by letters
         def self.filter_sort(request, sort_type, type, letters)
-          type, letters = self.filter(request, type, letters)
+          type, letters = filter(request, type, letters)
           type = type.sort_by(sort_type)
           letters = letters.map(&:value)
-          return type, letters
+          [type, letters]
         end
       end
     end

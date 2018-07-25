@@ -13,7 +13,7 @@ module Parliament
         #
         def autolink(link, link_type)
           if link_type == :url
-            return parliament_live_video_embed(link) if link.match(/parliamentlive.tv\/event\/index\/[a-z0-9-]{36}/i)
+            return parliament_live_video_embed(link) if link =~ /parliamentlive.tv\/event\/index\/[a-z0-9-]{36}/i
           end
 
           link # call super instead if we actually want autolinking
@@ -36,16 +36,13 @@ module Parliament
             # Add video ID
             url << "/#{uri.path.split('/').last}?"
             # Add original query if present, and not an empty string
-            url << "#{uri.query}&" if uri.query&.size
+            url << "#{CGI.unescapeHTML(uri.query)}&" if uri.query&.size
             # Add player options
             url << 'audioOnly=False&autoStart=False&statsEnabled=False'
           end
 
-          # Escape special characters in HTML
-          video_url = CGI.escapeHTML(video_url)
-
           # Return the video player
-          %(<div class="video-wrap"><iframe src="#{video_url}" name="UKPPlayer" title="UK Parliament Player" seamless="seamless" frameborder="0" allowfullscreen style="width: 100%; height: 100%"></iframe></div>)
+          %(<div class="video--wrapper"><iframe src="#{video_url}" name="UKPPlayer" title="UK Parliament Player" seamless="seamless" frameborder="0" allowfullscreen style="width: 100%; height: 100%;"></iframe></div>)
         end
       end
     end

@@ -62,9 +62,7 @@ if defined?(Airbrake) && ENV['AIRBRAKE_PROJECT_ID'].present? && ENV['AIRBRAKE_PR
   # Airbrake. This can be based on type, message, file, region or any other part
   # of the error's JSON
   Airbrake.add_filter do |notice|
-    if notice[:errors].any? { |error| error[:type] == 'ActionController::RoutingError' }
-      notice.ignore!
-    end
+    notice.ignore! if notice[:errors].any? { |error| error[:type] == 'ActionController::RoutingError' }
   end
 
   # If you want to convert your log messages to Airbrake errors, we offer an

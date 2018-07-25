@@ -9,7 +9,7 @@ RSpec.describe Parliament::Utils::Services::ParliamentMarkdownRenderer do
         context 'with start and end time' do
           it 'returns iframe HTML string replacement' do
             expect(parliament_markdown_renderer.send(:parliament_live_video_embed, 'https://parliamentlive.tv/event/index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?in=10:00:00&out=12:00:00')).to eq(
-              "<div class=\"video-wrap\"><iframe src=\"https://videoplayback.parliamentlive.tv/Player/Index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?in=10:00:00&amp;out=12:00:00&amp;audioOnly=False&amp;autoStart=False&amp;statsEnabled=False\" name=\"UKPPlayer\" title=\"UK Parliament Player\" seamless=\"seamless\" frameborder=\"0\" allowfullscreen style=\"width: 100%; height: 100%\"></iframe></div>"
+              "<div class=\"video--wrapper\"><iframe src=\"https://videoplayback.parliamentlive.tv/Player/Index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?in=10:00:00&out=12:00:00&audioOnly=False&autoStart=False&statsEnabled=False\" name=\"UKPPlayer\" title=\"UK Parliament Player\" seamless=\"seamless\" frameborder=\"0\" allowfullscreen style=\"width: 100%; height: 100%;\"></iframe></div>"
             )
           end
         end
@@ -17,7 +17,7 @@ RSpec.describe Parliament::Utils::Services::ParliamentMarkdownRenderer do
         context 'with no start or end time' do
           it 'returns iframe HTML string replacement' do
             expect(parliament_markdown_renderer.send(:parliament_live_video_embed, 'https://parliamentlive.tv/event/index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8')).to eq(
-              "<div class=\"video-wrap\"><iframe src=\"https://videoplayback.parliamentlive.tv/Player/Index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?audioOnly=False&amp;autoStart=False&amp;statsEnabled=False\" name=\"UKPPlayer\" title=\"UK Parliament Player\" seamless=\"seamless\" frameborder=\"0\" allowfullscreen style=\"width: 100%; height: 100%\"></iframe></div>"
+              "<div class=\"video--wrapper\"><iframe src=\"https://videoplayback.parliamentlive.tv/Player/Index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?audioOnly=False&autoStart=False&statsEnabled=False\" name=\"UKPPlayer\" title=\"UK Parliament Player\" seamless=\"seamless\" frameborder=\"0\" allowfullscreen style=\"width: 100%; height: 100%;\"></iframe></div>"
             )
           end
         end
@@ -28,7 +28,7 @@ RSpec.describe Parliament::Utils::Services::ParliamentMarkdownRenderer do
       context 'valid link and link type' do
         it 'generates iframe HTML string replacement' do
           expect(parliament_markdown_renderer.autolink('https://parliamentlive.tv/event/index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8', :url)).to eq(
-            "<div class=\"video-wrap\"><iframe src=\"https://videoplayback.parliamentlive.tv/Player/Index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?audioOnly=False&amp;autoStart=False&amp;statsEnabled=False\" name=\"UKPPlayer\" title=\"UK Parliament Player\" seamless=\"seamless\" frameborder=\"0\" allowfullscreen style=\"width: 100%; height: 100%\"></iframe></div>"
+            "<div class=\"video--wrapper\"><iframe src=\"https://videoplayback.parliamentlive.tv/Player/Index/1b5736b4-7c93-4827-a02f-abbf0bb36cc8?audioOnly=False&autoStart=False&statsEnabled=False\" name=\"UKPPlayer\" title=\"UK Parliament Player\" seamless=\"seamless\" frameborder=\"0\" allowfullscreen style=\"width: 100%; height: 100%;\"></iframe></div>"
           )
         end
       end

@@ -41,7 +41,7 @@ module Parliament
               parliament_match || bandiera_match || opensearch_match || hybrid_bills_match
             end
 
-            config.default_cassette_options = { match_requests_on: [:method, :filtered_uri] }
+            config.default_cassette_options = { match_requests_on: %i[method filtered_uri] }
 
             # Dynamically filter our sensitive information
             config.filter_sensitive_data('<AUTH_TOKEN>')   { ENV['PARLIAMENT_AUTH_TOKEN'] }       if ENV['PARLIAMENT_AUTH_TOKEN']
@@ -55,7 +55,7 @@ module Parliament
               should_ignore = ['_:node', '^^<http://www.w3.org/2001/XMLSchema#date>', '^^<http://www.w3.org/2001/XMLSchema#dateTime>', '^^<http://www.w3.org/2001/XMLSchema#integer>']
 
               # Check if content type header exists and if it includes application/n-triples
-              if interaction.response.headers['Content-Type'] && interaction.response.headers['Content-Type'].include?('application/n-triples')
+              if interaction.response.headers['Content-Type']&.include?('application/n-triples')
                 # Split our data by line
                 lines = interaction.response.body.split("\n")
 

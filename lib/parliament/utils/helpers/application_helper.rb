@@ -7,47 +7,47 @@ module Parliament
         # Note: All of the below are used to generate MIME types that our application will answer to, but NOT the
         # alternatives shown in our header. See ALTERNATIVE_MIME_TYPE_CONFIG.
         API_MIME_TYPE_CONFIG = [
-            {
-                nt: 'application/n-triples'
-            },
-            {
-                ttl: 'text/turtle'
-            },
-            {
-                tsv: 'text/tab-separated-values'
-            },
-            {
-                csv: 'text/csv'
-            },
-            {
-                rj: 'application/json+rdf'
-            },
-            {
-                jsonld: 'application/json+ld',
-                json:   'application/json'
-            },
-            {
-                rdfxml: 'application/rdf+xml',
-                rdf:    'application/xml',
-                xml:    'text/xml'
-            }
+          {
+            nt: 'application/n-triples'
+          },
+          {
+            ttl: 'text/turtle'
+          },
+          {
+            tsv: 'text/tab-separated-values'
+          },
+          {
+            csv: 'text/csv'
+          },
+          {
+            rj: 'application/json+rdf'
+          },
+          {
+            jsonld: 'application/json+ld',
+            json:   'application/json'
+          },
+          {
+            rdfxml: 'application/rdf+xml',
+            rdf:    'application/xml',
+            xml:    'text/xml'
+          }
         ].freeze
 
         # Use the above, minus the last two entries (json & xml), to build an alternative URL list.
         # Then re-create JSON and XML with the correct alternatives
-        ALTERNATIVE_MIME_TYPE_CONFIG = API_MIME_TYPE_CONFIG.take(API_MIME_TYPE_CONFIG.size-2).concat(
-            [
-                {
-                    json: 'application/json+ld'
-                },
-                {
-                    xml: 'application/rdf+xml'
-                }
-            ]
+        ALTERNATIVE_MIME_TYPE_CONFIG = API_MIME_TYPE_CONFIG.take(API_MIME_TYPE_CONFIG.size - 2).concat(
+          [
+            {
+              json: 'application/json+ld'
+            },
+            {
+              xml: 'application/rdf+xml'
+            }
+          ]
         )
 
-        API_MIME_TYPES                   = Parliament::Utils::Helpers::ApplicationHelper::API_MIME_TYPE_CONFIG.map { |mime_type| mime_type.values }.flatten.freeze
-        API_FILE_EXTENSIONS              = Parliament::Utils::Helpers::ApplicationHelper::API_MIME_TYPE_CONFIG.map { |mime_type| mime_type.keys   }.flatten.freeze
+        API_MIME_TYPES                   = Parliament::Utils::Helpers::ApplicationHelper::API_MIME_TYPE_CONFIG.map(&:values).flatten.freeze
+        API_FILE_EXTENSIONS              = Parliament::Utils::Helpers::ApplicationHelper::API_MIME_TYPE_CONFIG.map(&:keys).flatten.freeze
         ALTERNATIVE_MIME_TYPES_FLATTENED = Parliament::Utils::Helpers::ApplicationHelper::ALTERNATIVE_MIME_TYPE_CONFIG.reduce(:merge)
 
         # Sets the title for a page.
@@ -58,6 +58,7 @@ module Parliament
           content_for(:title) { page_title }
           page_title
         end
+
         # Before every request that provides data, see if the user is requesting a format that can be served by the data API.
         # If they are, transparently redirect them with a '302: Found' status code
         def data_check
@@ -81,7 +82,7 @@ module Parliament
           request_extension = File.extname(URI.parse(request.url).path)
           redirect_url.path = redirect_url.path + request_extension if request_extension != ''
 
-          return redirect_to(redirect_url.to_s)
+          redirect_to(redirect_url.to_s)
         end
 
         # Get the data URL for our current controller and action OR raise a StandardError
@@ -107,7 +108,7 @@ module Parliament
           alternates = []
 
           ALTERNATIVE_MIME_TYPES_FLATTENED.each do |extension, format| # (key, value)
-            uri =  URI.parse(url)
+            uri = URI.parse(url)
             uri.path = "#{uri.path}.#{extension}"
 
             alternates << { type: format, href: uri.to_s }
@@ -127,7 +128,6 @@ module Parliament
         def reset_alternates
           Pugin.alternates = []
         end
-
       end
     end
   end

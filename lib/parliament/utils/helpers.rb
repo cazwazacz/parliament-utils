@@ -7,6 +7,10 @@ require_relative './helpers/parliament_helper'
 require_relative './helpers/postcode_helper'
 require_relative './helpers/request_helper'
 require_relative './helpers/v_card_helper'
+require_relative './helpers/grouping_helper'
+require_relative './helpers/role_grouping_helper'
+require_relative './helpers/business_item_grouping_helper'
+require_relative './helpers/history_helper'
 
 require 'parliament/grom/decorator'
 

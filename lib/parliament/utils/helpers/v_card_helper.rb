@@ -1,3 +1,5 @@
+require 'vcard'
+
 # Namespace for helper methods to generate a vcard.
 module Parliament
   module Utils
@@ -10,12 +12,14 @@ module Parliament
         def create_vcard(contact_point)
           Vcard::Vcard::Maker.make2 do |maker|
             maker.add_name do |name|
-              person_set(contact_point, name)
-              postal_address_set(contact_point, maker)
               contacts_set(contact_point, maker)
+              postal_address_set(contact_point, maker)
+              person_set(contact_point, name)
             end
           end
         end
+
+        private
 
         # Sets the contact details of a vcard.
         #

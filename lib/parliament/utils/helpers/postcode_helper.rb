@@ -6,7 +6,6 @@ module Parliament
   module Utils
     module Helpers
       module PostcodeHelper
-
         include Parliament::Utils::Helpers::TranslationHelper
 
         attr_accessor :previous_path

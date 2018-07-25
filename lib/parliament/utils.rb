@@ -1,6 +1,6 @@
 require 'parliament/utils/version'
 require 'parliament/utils/helpers'
-require 'parliament/utils/services'
+require 'parliament/utils/services' if defined?(Rails)
 require 'parliament/utils/config/initializers/bandiera'
 require 'parliament/utils/test_helpers'
 require 'parliament/utils/railtie' if defined?(Rails)
